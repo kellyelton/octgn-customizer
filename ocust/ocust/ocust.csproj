@@ -32,7 +32,7 @@
     <PublisherName>Skylabs</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>5</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -151,6 +151,9 @@
     <Compile Include="DebugWindow.xaml.cs">
       <DependentUpon>DebugWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DeepGameScan.xaml.cs">
+      <DependentUpon>DeepGameScan.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GameEdit.xaml.cs">
       <DependentUpon>GameEdit.xaml</DependentUpon>
     </Compile>
@@ -162,6 +165,10 @@
     </Compile>
     <Compile Include="Structure\Relationship.cs" />
     <Page Include="DebugWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeepGameScan.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

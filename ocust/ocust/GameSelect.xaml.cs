@@ -24,5 +24,10 @@ namespace ocust
             App.Game = gameSelector.Game;
             NavigationService.Navigate(new GameEdit());
         }
+
+        private void btnDeepScan_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new DeepGameScan());
+        }
     }
 }
