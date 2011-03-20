@@ -46,6 +46,6 @@
                 </LinearGradientBrush>
             </Border.Background>
         </Border>
-        <Button Content="Start" Name="btnStart" Grid.Column="1" Grid.Row="2" Margin="8,11,12,12" />
+        <Button Content="Start" Name="btnStart" Grid.Column="1" Grid.Row="2" Margin="8,11,12,12" Click="btnStart_Click" />
     </Grid>
 </Page>
