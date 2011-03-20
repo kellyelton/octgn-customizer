@@ -254,7 +254,14 @@ namespace ocust
             ZipFile file = new ZipFile(App.Game.Filename);
             App.UnzipPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "oconfig");
             App.UnzipPath = Path.Combine(App.UnzipPath, "temp");
-            Directory.Delete(App.UnzipPath, true);
+            try
+            {
+                if (Directory.Exists(App.UnzipPath))
+                    Directory.Delete(App.UnzipPath, true);
+            }
+            catch (Exception e)
+            {
+            }
             Directory.CreateDirectory(App.UnzipPath);
             file.ExtractAll(App.UnzipPath);
             App.addDebugLine("All files extracted to : " + App.UnzipPath);

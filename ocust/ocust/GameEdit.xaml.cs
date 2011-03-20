@@ -13,6 +13,8 @@ namespace ocust
     /// </summary>
     public partial class GameEdit : Page
     {
+        BitmapImage bi;
+
         public GameEdit()
         {
             InitializeComponent();
@@ -90,7 +92,21 @@ namespace ocust
             String f = cbImageList.Text.Replace('/', '\\');
             f = App.UnzipPath + f;
             Uri uri = new Uri("file://" + f);
-            imgBackground.Source = new BitmapImage(uri);
+            System.IO.Stream stream = new FileStream(f, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            if (bi != null)
+            {
+                bi.StreamSource.Close();
+                bi.StreamSource.Dispose();
+                bi = null;
+            }
+            bi = new BitmapImage();
+            bi.CacheOption = BitmapCacheOption.OnLoad;
+            bi.UriSource = null;
+            bi.BeginInit();
+            bi.StreamSource = stream;
+            bi.EndInit();
+            imgBackground.Source = bi;
+            //bi.StreamSource.Close();
             App.SetStatus("");
         }
 
@@ -124,7 +140,20 @@ namespace ocust
             String f = (String)e.AddedItems[0].ToString().Replace('/', '\\');
             f = App.UnzipPath + f;
             Uri uri = new Uri("file://" + f);
-            imgBackground.Source = new BitmapImage(uri);
+            System.IO.Stream stream = new FileStream(f, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            if (bi != null)
+            {
+                bi.StreamSource.Close();
+                bi.StreamSource.Dispose();
+                bi = null;
+            }
+            bi = new BitmapImage();
+            bi.CacheOption = BitmapCacheOption.OnLoad;
+            bi.UriSource = null;
+            bi.BeginInit();
+            bi.StreamSource = stream;
+            bi.EndInit();
+            imgBackground.Source = bi;
         }
 
         private void btnAddImage_Click(object sender, RoutedEventArgs e)
@@ -161,7 +190,19 @@ namespace ocust
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            imgBackground.Source = null;
+            bi.StreamSource.Close();
+            bi.StreamSource.Dispose();
+            imgBackground = null;
+        }
+
+        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if ((bool)e.NewValue == false)
+            {
+                bi.StreamSource.Close();
+                bi.StreamSource.Dispose();
+                imgBackground = null;
+            }
         }
     }
 }

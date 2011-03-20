@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       mc:Ignorable="d"
       d:DesignHeight="300" d:DesignWidth="300"
-	Title="GameEdit" Width="636" Height="319" Unloaded="Page_Unloaded" Background="#00000000">
+	Title="GameEdit" Width="636" Height="319" Unloaded="Page_Unloaded" Background="#00000000" IsVisibleChanged="Page_IsVisibleChanged">
 
     <Grid>
         <TabControl HorizontalAlignment="Stretch" Name="tabControl1" VerticalAlignment="Stretch" UseLayoutRounding="False">

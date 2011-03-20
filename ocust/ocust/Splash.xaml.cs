@@ -89,6 +89,7 @@ namespace ocust
                             }
                             else
                             {
+                                MessageBox.Show("You must fix this problem before you can use this app. App shutting down now.");
                                 App.HardShutDown();
                                 return;
                             }
@@ -104,6 +105,7 @@ namespace ocust
                         }
                         else
                         {
+                            MessageBox.Show("You must fix this problem before you can use this app. App shutting down now.");
                             App.HardShutDown();
                             return;
                         }
