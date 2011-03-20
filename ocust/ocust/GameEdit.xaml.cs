@@ -283,5 +283,10 @@ namespace ocust
             Save_Game_File();
             App.SetStatus("");
         }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            imgBackground.Source = null;
+        }
     }
 }
