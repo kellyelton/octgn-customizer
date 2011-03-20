@@ -11,6 +11,7 @@ namespace ocust
         public GameSelect()
         {
             InitializeComponent();
+            App.Game = gameSelector.Game;
             //MessageBox.Show(gameSelector.Game.Filename);
         }
 
@@ -27,6 +28,7 @@ namespace ocust
 
         private void btnDeepScan_Click(object sender, RoutedEventArgs e)
         {
+            App.Game = gameSelector.Game;
             NavigationService.Navigate(new DeepGameScan());
         }
     }

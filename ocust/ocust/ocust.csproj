@@ -164,6 +164,7 @@
       <DependentUpon>Splash.xaml</DependentUpon>
     </Compile>
     <Compile Include="Structure\Relationship.cs" />
+    <Compile Include="XmlStuff.cs" />
     <Page Include="DebugWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
