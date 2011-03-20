@@ -66,7 +66,7 @@ namespace ocust
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //Navigate(new Splash());
+            App.MainWindow = this;
         }
     }
 }

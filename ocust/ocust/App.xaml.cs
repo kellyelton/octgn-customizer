@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using System.Threading;
 using System.Windows;
 using Octgn.Data;
 using ocust.Structure;
@@ -25,6 +26,8 @@ namespace ocust
 
         public static List<Relationship> Relationships { get; set; }
 
+        private static Thread ochecker;
+
         public Boolean isOctgnRunning
         {
             get
@@ -32,22 +35,22 @@ namespace ocust
                 //OCTGNwLobby
                 //OCTGN
                 Process[] processes = Process.GetProcessesByName("OCTGNwLobby");
-                if (processes.Length > 1)
+                if (processes.Length > 0)
                 {
                     return true;
                 }
                 processes = Process.GetProcessesByName("OCTGNwLobby.vhost");
-                if (processes.Length > 1)
+                if (processes.Length > 0)
                 {
                     return true;
                 }
                 processes = Process.GetProcessesByName("OCTGN");
-                if (processes.Length > 1)
+                if (processes.Length > 0)
                 {
                     return true;
                 }
                 processes = Process.GetProcessesByName("OCTGN.vhost");
-                if (processes.Length > 1)
+                if (processes.Length > 0)
                 {
                     return true;
                 }
@@ -134,9 +137,54 @@ namespace ocust
                 HardShutDown();
                 return;
             }
+            Exit += new ExitEventHandler(App_Exit);
+            ochecker = new Thread(new ThreadStart(delegate()
+                {
+                    int a = 0;
+                    while (a == 0)
+                    {
+                        Thread.Sleep(1000);
 
+                        if (isOctgnRunning)
+                        {
+                            try
+                            {
+                                App.Current.Dispatcher.Invoke
+                                (
+                                    System.Windows.Threading.DispatcherPriority.Normal,
+                                    new Action
+                                    (
+                                        delegate()
+                                        {
+                                            MainWindow.IsEnabled = false;
+                                        }
+                                    )
+                                );
+                                //App.Current.MainWindow.IsEnabled = false;
+                                MessageBox.Show("You must shut down OCTGN BEFORE you run this program!");
+                            }
+                            catch { }
+                        }
+                        else
+                        {
+                            App.Current.Dispatcher.Invoke
+                            (
+                                System.Windows.Threading.DispatcherPriority.Normal,
+                                new Action
+                                (
+                                    delegate()
+                                    {
+                                        if (!MainWindow.IsEnabled)
+                                            MainWindow.IsEnabled = true;
+                                    }
+                                )
+                            );
+                        }
+                    }
+                }
+            ));
+            ochecker.Start();
             GamesRepository = new Octgn.Data.GamesRepository();
-            MainWindow = App.Current.MainWindow as MainWindow;
             Relationships = new List<Relationship>();
             DebugWindow = new DebugWindow();
 #if(DEBUG)
@@ -144,6 +192,11 @@ namespace ocust
             App.Current.MainWindow = MainWindow;
 #endif
             base.OnStartup(e);
+        }
+
+        private void App_Exit(object sender, ExitEventArgs e)
+        {
+            ochecker.Abort();
         }
     }
 }
