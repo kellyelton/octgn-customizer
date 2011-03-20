@@ -13,6 +13,6 @@
             <RowDefinition Height="63" />
         </Grid.RowDefinitions>
         <l:GameSelector x:Name="gameSelector" Grid.RowSpan="2" />
-        <Button Content="Next" Grid.Row="1" Height="38" HorizontalAlignment="Left" Margin="529,13,0,0" Name="btnNext" VerticalAlignment="Top" Width="105" />
+        <Button Content="Next" Grid.Row="1" Height="38" HorizontalAlignment="Left" Margin="529,13,0,0" Name="btnNext" VerticalAlignment="Top" Width="105" Click="btnNext_Click" />
     </Grid>
 </Page>

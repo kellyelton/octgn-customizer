@@ -88,12 +88,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GameEdit.xaml.cs">
+      <DependentUpon>GameEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GameSelector.xaml.cs">
       <DependentUpon>GameSelector.xaml</DependentUpon>
     </Compile>
     <Compile Include="Splash.xaml.cs">
       <DependentUpon>Splash.xaml</DependentUpon>
     </Compile>
+    <Page Include="GameEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GameSelector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -14,6 +14,19 @@ namespace ocust
 
         public static MainWindow MainWindow { get; set; }
 
+        public static Game Game { get; set; }
+
+        public static String gameFilePrefix { get; set; }
+
+        public static void SetStatus(String s)
+        {
+            Splash sp = App.Current.MainWindow.Content as Splash;
+            if (sp != null)
+            {
+                sp.setstatus(s);
+            }
+        }
+
         public static Version Version
         {
             get

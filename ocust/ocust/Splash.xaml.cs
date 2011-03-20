@@ -22,7 +22,7 @@ namespace ocust
             this.versionText.Text = string.Format("Version {0}", App.Version.ToString(4));
         }
 
-        private void setstatus(String s)
+        public void setstatus(String s)
         {
             Dispatcher.Invoke
             (
@@ -202,6 +202,11 @@ namespace ocust
         private void btnQuit_Click(object sender, RoutedEventArgs e)
         {
             App.HardShutDown();
+        }
+
+        private void Border_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            App.Current.MainWindow.DragMove();
         }
     }
 }

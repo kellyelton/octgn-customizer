@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <Border BorderThickness="2" HorizontalAlignment="Stretch" Name="border1" VerticalAlignment="Stretch" CornerRadius="15" BorderBrush="Black" Grid.RowSpan="3">
             <Border Grid.ColumnSpan="1" VerticalAlignment="Top" Margin="8" ClipToBounds="True"
-           Height="100" Grid.Row="0">
+           Height="100" Grid.Row="0" MouseLeftButtonDown="Border_MouseLeftButtonDown">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="6*" />
@@ -104,6 +104,6 @@
             </Border.Background>
         </Border>
         <Label Content="Loading..." Grid.Row="2" Margin="5" Name="label2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Aharoni" FontSize="18" Foreground="White" />
-        <Frame Grid.Row="1"  HorizontalAlignment="Stretch" Margin="5" Name="frame1" VerticalAlignment="Stretch"  />
+        <Frame Grid.Row="1"  HorizontalAlignment="Stretch" Margin="5" Name="frame1" VerticalAlignment="Stretch" NavigationUIVisibility="Visible" />
     </Grid>
 </Page>

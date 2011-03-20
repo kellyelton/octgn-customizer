@@ -11,12 +11,18 @@ namespace ocust
         public GameSelect()
         {
             InitializeComponent();
-            MessageBox.Show(gameSelector.Game.Filename);
+            //MessageBox.Show(gameSelector.Game.Filename);
         }
 
         private void GameSelect_Loaded(object sender, RoutedEventArgs e)
         {
             //MessageBox.Show(gameSelector.Game.Definition.Name);
+        }
+
+        private void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+            App.Game = gameSelector.Game;
+            NavigationService.Navigate(new GameEdit());
         }
     }
 }
