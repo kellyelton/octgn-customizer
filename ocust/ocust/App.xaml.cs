@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
 using Octgn.Data;
+using ocust.Structure;
 
 namespace ocust
 {
@@ -14,9 +17,43 @@ namespace ocust
 
         public static MainWindow MainWindow { get; set; }
 
+        public static DebugWindow DebugWindow { get; set; }
+
         public static Game Game { get; set; }
 
         public static String gameFilePrefix { get; set; }
+
+        public static List<Relationship> Relationships { get; set; }
+
+        public Boolean isOctgnRunning
+        {
+            get
+            {
+                //OCTGNwLobby
+                //OCTGN
+                Process[] processes = Process.GetProcessesByName("OCTGNwLobby");
+                if (processes.Length > 1)
+                {
+                    return true;
+                }
+                processes = Process.GetProcessesByName("OCTGNwLobby.vhost");
+                if (processes.Length > 1)
+                {
+                    return true;
+                }
+                processes = Process.GetProcessesByName("OCTGN");
+                if (processes.Length > 1)
+                {
+                    return true;
+                }
+                processes = Process.GetProcessesByName("OCTGN.vhost");
+                if (processes.Length > 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
 
         public static void SetStatus(String s)
         {
@@ -25,6 +62,13 @@ namespace ocust
             {
                 sp.setstatus(s);
             }
+        }
+
+        public static void addDebugLine(String s)
+        {
+#if(DEBUG)
+            DebugWindow.AddLine(s);
+#endif
         }
 
         public static Version Version
@@ -46,7 +90,11 @@ namespace ocust
                 (
                     delegate()
                     {
-                        Application.Current.MainWindow.Close();
+                        try
+                        {
+                            Application.Current.MainWindow.Close();
+                        }
+                        catch { }
                         Application.Current.Shutdown(0);
                     }
                 )
@@ -72,8 +120,29 @@ namespace ocust
             };
             Updates.PerformHouskeeping();
             */
+
+            string proc = Process.GetCurrentProcess().ProcessName;
+            Process[] processes = Process.GetProcessesByName(proc);
+            if (processes.Length > 1)
+            {
+                HardShutDown();
+                return;
+            }
+            if (isOctgnRunning)
+            {
+                MessageBox.Show("You must shut down OCTGN BEFORE you run this program!");
+                HardShutDown();
+                return;
+            }
+
             GamesRepository = new Octgn.Data.GamesRepository();
             MainWindow = App.Current.MainWindow as MainWindow;
+            Relationships = new List<Relationship>();
+            DebugWindow = new DebugWindow();
+#if(DEBUG)
+            DebugWindow.Show();
+            App.Current.MainWindow = MainWindow;
+#endif
             base.OnStartup(e);
         }
     }
