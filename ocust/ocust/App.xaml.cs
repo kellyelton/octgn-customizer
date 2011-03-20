@@ -12,6 +12,8 @@ namespace ocust
     {
         public static GamesRepository GamesRepository { get; set; }
 
+        public static MainWindow MainWindow { get; set; }
+
         public static Version Version
         {
             get
@@ -58,7 +60,7 @@ namespace ocust
             Updates.PerformHouskeeping();
             */
             GamesRepository = new Octgn.Data.GamesRepository();
-
+            MainWindow = App.Current.MainWindow as MainWindow;
             base.OnStartup(e);
         }
     }

@@ -127,6 +127,17 @@ namespace ocust
                 }
             }
             setstatus("Opening program...");
+            Dispatcher.Invoke
+            (
+                System.Windows.Threading.DispatcherPriority.Normal,
+                new Action
+                (
+                    delegate()
+                    {
+                        this.NavigationService.Navigate(new GameSelect());
+                    }
+                )
+            );
         }
 
         private void ChangeGamePath(Octgn.Data.Game game, String path)

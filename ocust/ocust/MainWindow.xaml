@@ -1,5 +1,8 @@
 ﻿<NavigationWindow x:Class="ocust.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525" ShowsNavigationUI="False" Source="Splash.xaml" WindowStyle="None" Background="#00000000" AllowsTransparency="True" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" ShowsNavigationUI="False" Source="Splash.xaml" WindowStyle="None" AllowsTransparency="True" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" ResizeMode="CanResize" HorizontalContentAlignment="Left">
+    <NavigationWindow.Background>
+        <SolidColorBrush />
+    </NavigationWindow.Background>
 </NavigationWindow>

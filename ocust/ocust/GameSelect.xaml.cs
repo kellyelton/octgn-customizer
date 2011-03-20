@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace ocust
@@ -11,9 +11,12 @@ namespace ocust
         public GameSelect()
         {
             InitializeComponent();
-            String opath = System.IO.Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-        "Octgn");
+            MessageBox.Show(gameSelector.Game.Filename);
+        }
+
+        private void GameSelect_Loaded(object sender, RoutedEventArgs e)
+        {
+            //MessageBox.Show(gameSelector.Game.Definition.Name);
         }
     }
 }
