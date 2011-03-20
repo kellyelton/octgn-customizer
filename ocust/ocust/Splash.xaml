@@ -5,16 +5,17 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       mc:Ignorable="d"
       d:DesignHeight="292" d:DesignWidth="646"
-	Title="Splash" Height="153" Width="646" HorizontalAlignment="Center" VerticalAlignment="Center">
+	Title="Splash" Width="646" HorizontalAlignment="Center" VerticalAlignment="Center">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100*" />
+            <RowDefinition Height="110" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
-        <Border BorderThickness="2" HorizontalAlignment="Stretch" Name="border1" VerticalAlignment="Stretch" CornerRadius="15" BorderBrush="Black" Grid.RowSpan="2">
-            <Border Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="8" ClipToBounds="True"
-           Height="100">
+        <Border BorderThickness="2" HorizontalAlignment="Stretch" Name="border1" VerticalAlignment="Stretch" CornerRadius="15" BorderBrush="Black" Grid.RowSpan="3">
+            <Border Grid.ColumnSpan="1" VerticalAlignment="Top" Margin="8" ClipToBounds="True"
+           Height="100" Grid.Row="0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="6*" />
@@ -91,6 +92,8 @@
                             </Canvas>
                         </Canvas>
                     </Viewbox>
+                    <Button Content="Quit" Grid.Row="1" Height="22" HorizontalAlignment="Right" Margin="0,2,6,0" Name="btnQuit" VerticalAlignment="Top" Width="58" Click="btnQuit_Click" IsEnabled="False" />
+                    <Button Content="Minimize" Grid.Row="1" Height="22" HorizontalAlignment="Left" Margin="488,2,0,0" Name="btnMin" VerticalAlignment="Top" Width="66" Click="btnMin_Click" />
                 </Grid>
             </Border>
             <Border.Background>
@@ -100,6 +103,7 @@
                 </LinearGradientBrush>
             </Border.Background>
         </Border>
-        <Label Content="Loading..." Grid.Row="1" Margin="5" Name="label2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Andy" FontSize="18" Foreground="White" />
+        <Label Content="Loading..." Grid.Row="2" Margin="5" Name="label2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Aharoni" FontSize="18" Foreground="White" />
+        <Frame Grid.Row="1"  HorizontalAlignment="Stretch" Margin="5" Name="frame1" VerticalAlignment="Stretch"  />
     </Grid>
 </Page>

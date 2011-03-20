@@ -134,10 +134,12 @@ namespace ocust
                 (
                     delegate()
                     {
-                        this.NavigationService.Navigate(new GameSelect());
+                        btnQuit.IsEnabled = true;
+                        frame1.Navigate(new GameSelect());
                     }
                 )
             );
+            setstatus("");
         }
 
         private void ChangeGamePath(Octgn.Data.Game game, String path)
@@ -190,6 +192,16 @@ namespace ocust
                     masterDb.RollbackTransaction();
                 }
             }
+        }
+
+        private void btnMin_Click(object sender, RoutedEventArgs e)
+        {
+            App.Current.MainWindow.WindowState = WindowState.Minimized;
+        }
+
+        private void btnQuit_Click(object sender, RoutedEventArgs e)
+        {
+            App.HardShutDown();
         }
     }
 }

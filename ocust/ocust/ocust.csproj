@@ -91,17 +91,10 @@
     <Compile Include="GameSelector.xaml.cs">
       <DependentUpon>GameSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PageTemplate.xaml.cs">
-      <DependentUpon>PageTemplate.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Splash.xaml.cs">
       <DependentUpon>Splash.xaml</DependentUpon>
     </Compile>
     <Page Include="GameSelector.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PageTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
