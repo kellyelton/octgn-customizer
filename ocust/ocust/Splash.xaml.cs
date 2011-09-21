@@ -7,6 +7,7 @@ using Microsoft.Win32;
 using Octgn.Data;
 using VistaDB;
 using VistaDB.DDA;
+using VistaDB.Diagnostic;
 
 namespace ocust
 {
@@ -48,31 +49,31 @@ namespace ocust
             Thread.Sleep(2000);
             setstatus("Checking for directory...");
             String opath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Octgn");
-            if (!Directory.Exists(opath))
+            if(!Directory.Exists(opath))
             {
                 MessageBox.Show("You must run OCTGN and install a game first!");
                 Application.Current.Shutdown();
                 return;
             }
             setstatus("Checking for master database...");
-            if (!File.Exists(opath + "\\" + "master.vdb3"))
+            if(!File.Exists(opath + "\\" + "master.vdb3"))
             {
                 MessageBox.Show("You must run OCTGN and install a game first!");
                 Application.Current.Shutdown();
                 return;
             }
             setstatus("Making sure game paths are correct...");
-            foreach (Game g in App.GamesRepository.Games)
+            foreach(Game g in App.GamesRepository.Games)
             {
-                if (!File.Exists(g.Filename))
+                if(!File.Exists(g.Filename))
                 {
                     MessageBoxResult mb = MessageBox.Show("Game " + g.Name + " can not be found at the location '" + g.Filename + "'. Search for the game file?", "Game Error", MessageBoxButton.YesNo, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
-                    if (mb == MessageBoxResult.Yes)
+                    if(mb == MessageBoxResult.Yes)
                     {
                         OpenFileDialog ofd = new OpenFileDialog();
                         ofd.Filter = "Game File (*.o8g)|*.o8g";
                         bool dr = (bool)ofd.ShowDialog();
-                        if (dr == true)
+                        if(dr == true)
                         {
                             string filePath = ofd.FileName;
                             string safeFilePath = ofd.SafeFileName;
@@ -82,7 +83,7 @@ namespace ocust
                         else
                         {
                             mb = MessageBox.Show("Game " + g.Name + " can not be found at the location '" + g.Filename + "'. Delete game file?", "Game Error", MessageBoxButton.YesNo, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
-                            if (mb == MessageBoxResult.Yes)
+                            if(mb == MessageBoxResult.Yes)
                             {
                                 DeleteGame(g);
                                 MessageBox.Show("Game " + g.Name + " Deleted from the DB.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -98,7 +99,7 @@ namespace ocust
                     else
                     {
                         mb = MessageBox.Show("Game " + g.Name + " can not be found at the location '" + g.Filename + "'. Delete game file?", "Game Error", MessageBoxButton.YesNo, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
-                        if (mb == MessageBoxResult.Yes)
+                        if(mb == MessageBoxResult.Yes)
                         {
                             DeleteGame(g);
                             MessageBox.Show("Game " + g.Name + " Deleted from the DB.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -113,15 +114,15 @@ namespace ocust
                 }
             }
             setstatus("Making sure set files exist...");
-            foreach (Game g in App.GamesRepository.Games)
+            foreach(Game g in App.GamesRepository.Games)
             {
-                foreach (Set s in g.Sets)
+                foreach(Set s in g.Sets)
                 {
                     String uri = s.GetPackUri();
                     uri = uri.Replace("pack://file:,,,", "");
                     uri = uri.Replace(',', '\\');
 
-                    if (!File.Exists(uri))
+                    if(!File.Exists(uri))
                     {
                         MessageBoxResult mb = MessageBox.Show("Set " + s.Name + " can not be found at the location '" + uri + "'. This set will be deleted. You must go into OCTGN to reinstall this set.", "Game Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.None);
                         g.DeleteSet(s);
@@ -148,15 +149,15 @@ namespace ocust
         {
             String opath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Octgn");
             String masterDbPath = Path.Combine(opath, "master.vdb3"); ;
-            using (var dda = VistaDBEngine.Connections.OpenDDA())
-            using (var masterDb = dda.OpenDatabase(masterDbPath, VistaDBDatabaseOpenMode.NonexclusiveReadWrite, null))
-            using (var gamesTable = masterDb.OpenTable("Game", false, false))
+            using(var dda = VistaDBEngine.Connections.OpenDDA())
+            using(var masterDb = dda.OpenDatabase(masterDbPath, VistaDBDatabaseOpenMode.NonexclusiveReadWrite, null))
+            using(var gamesTable = masterDb.OpenTable("Game", false, false))
             {
                 masterDb.BeginTransaction();
                 bool previousCompatibleVersion = false;
                 try
                 {
-                    if (gamesTable.Find("id:'" + game.Id.ToString() + "'", "GamePK", false, false))
+                    if(gamesTable.Find("id:'" + game.Id.ToString() + "'", "GamePK", false, false))
                         gamesTable.PutString("filename", path);
                     gamesTable.Post();
                     masterDb.CommitTransaction();
@@ -173,24 +174,28 @@ namespace ocust
         {
             String opath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Octgn");
             String masterDbPath = Path.Combine(opath, "master.vdb3"); ;
-            using (var dda = VistaDBEngine.Connections.OpenDDA())
-            using (var masterDb = dda.OpenDatabase(masterDbPath, VistaDBDatabaseOpenMode.NonexclusiveReadWrite, null))
-            using (var gamesTable = masterDb.OpenTable("Game", false, false))
+            using(var dda = VistaDBEngine.Connections.OpenDDA())
+            using(var masterDb = dda.OpenDatabase(masterDbPath, VistaDBDatabaseOpenMode.NonexclusiveReadWrite, null))
+            using(var gamesTable = masterDb.OpenTable("Game", false, false))
             {
                 masterDb.BeginTransaction();
                 try
                 {
-                    if (gamesTable.Find("id:'" + game.Id.ToString() + "'", "GamePK", false, false))
+                    if(gamesTable.Find("id:'" + game.Id.ToString() + "'", "GamePK", false, false))
                     {
+                        gamesTable.Unlock(gamesTable.CurrentRow.RowId);
                         gamesTable.Delete();
-                        foreach (Set s in game.Sets)
+
+                        foreach(Set s in game.Sets)
                         {
                             game.DeleteSet(s);
                         }
                     }
                 }
-                catch (Exception e)
+                catch(VistaDBException e)
                 {
+                    String s = e.StackTrace;
+                    MessageBox.Show(s);
                     masterDb.RollbackTransaction();
                 }
             }
